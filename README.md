@@ -18,8 +18,7 @@ Valorant Blog
 1. **โหลดโปรเจคเพิ่มเติม**
 เนื่องจากไม่สามารถ Upload ขึ้น Github ได้ เพราะไฟล์ใหญ่ 
    ```bash
-   git clone https://github.com/username/repo.git
+   https://drive.google.com/drive/folders/1kkdpSubQAcQFdfupXI9Uq-g0OFS1rR1z?usp=sharing
    
--  1: [ใช้ plugin all-in-one ใน WordPress]
--  2: [ลากไฟล์ ที่อยู่ใน Google Drive ที่ชื่อว่า all-in-one เข้าไปใส่]
--  3: หกหฟก
+-  1: ใช้ plugin all-in-one ใน WordPress
+-  2: ลากไฟล์ ที่อยู่ใน Google Drive ที่ชื่อว่า all-in-one เข้าไปใส่
