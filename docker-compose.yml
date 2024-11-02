@@ -1,0 +1,49 @@
+version: "3.9" # ระบุเวอร์ชันของ Docker Compose
+
+services: # กำหนดคอนเทนเนอร์และการกำหนดค่าสำหรับแต่ละคอนเทนเนอร์
+  db: # คอนเทนเนอร์ MySQL
+    image: mysql:5.7
+    restart: always
+    networks:
+      - web_network
+    volumes:
+      - ./mysql:/var/lib/mysql # มีการแม็พโฟลเดอร์ ./mysql ไปยังโฟลเดอร์ /var/lib/mysql ภายในคอนเทนเนอร์เพื่อการจัดเก็บข้อมูล.
+    environment:
+      - MYSQL_ROOT_PASSWORD=1234
+      - MYSQL_DATABASE=wordpress
+      - MYSQL_USER=wordpress
+      - MYSQL_PASSWORD=wordpress
+  wordpress: #คอนเทนเนอร์ WordPress 
+    depends_on:
+      - db
+    image: wordpress:5.9.3-php7.4-apache
+    #deploy:
+    #  replicas: 0
+    restart: always #รีสตาร์ ทุกครั้ง
+    networks:
+      - web_network
+    volumes:
+      - ./wordpress:/var/www/html
+    #  - ./config/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+    ports: # กำหนด port 80:80
+      - "80:80"
+    environment: # กำหนดตัวแปรสภาพแวดล้อมสำหรับการเชื่อมต่อฐานข้อมูลของ WordPress.
+      - WORDPRESS_DB_HOST=db
+      - WORDPRESS_DB_USER=wordpress
+      - WORDPRESS_DB_PASSWORD=wordpress
+      - WORDPRESS_DB_NAME=wordpress
+  phpmyadmin: # คอนเทนเนอร์ phpMyAdmin
+    depends_on:
+      - db
+    image: phpmyadmin
+    restart: always
+    networks:
+      - web_network
+    environment:
+      - PMA_ARBITRARY=1 # เพื่ออนุญาตให้กำหนดการเชื่อมต่อ phpMyAdmin ได้อย่างอิสระ. 
+    ports:
+      - 7770:80
+
+networks:
+  web_network: 
+      

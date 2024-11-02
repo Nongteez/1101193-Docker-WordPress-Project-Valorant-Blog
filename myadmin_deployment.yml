@@ -1,0 +1,44 @@
+---
+apiVersion: apps/v1 # กำหนด version kubernetes
+kind: Deployment
+metadata: # ใส่ข้อมูลเกี่ยวกับ Deployment และป้ายกำกับ (labels)
+  name: phpmyadmin-deployment
+  labels:
+    app: phpmyadmin
+spec: # ระบุสำหรับข้อมูลการกำหนดใน Deployment.
+  replicas: 1 # จำลองเครื่อง ใช้ windows เป็น 1อยู่แล้ว
+  selector:
+    matchLabels:
+      app: phpmyadmin
+  template: # ระบุโครงสร้างของ Pods ที่สร้างโดย Deployment.
+    metadata:
+      labels:
+        app: phpmyadmin
+    spec:
+      containers:
+        - name: phpmyadmin
+          image: phpmyadmin
+          ports:
+            - containerPort: 80
+          env: # ระบุตัวแปรสภาพแวดล้อมสำหรับคอนเทนเนอร์
+            - name: PMA_HOST
+              value: wordpress-mysql
+            - name: PMA_PORT
+              value: "3306"
+            - name: MYSQL_ROOT_PASSWORD
+              value: password
+            - name: UPLOAD_LIMIT # ขีดจำกัดการอัปโหลดไฟล์.
+              value: 100M
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: phpmyadmin-service
+spec:
+  type: NodePort # ระบุประเภทของ Service เป็น NodePort เพื่อให้ผู้ใช้สามารถเข้าถึงผ่าน NodePort.
+  selector:
+    app: phpmyadmin
+  ports:
+  - protocol: TCP # ระบุโปรโตคอลที่ใช้.
+    port: 80 # ระบุ port
+    targetPort: 80 # ระบุพอร์ตบน Pods ที่ Service จะส่งข้อมูลไป.

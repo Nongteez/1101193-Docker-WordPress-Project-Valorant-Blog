@@ -1,0 +1,92 @@
+--- 
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: wp-pv-volume
+  labels:
+    type: local
+spec:
+  storageClassName: manual # ระบุชื่อของคลาสเก็บข้อมูล (StorageClass) เป็น "manual"
+  capacity: # ระบุความจุของ PersistentVolume เป็น 1 กิกะไบต์
+    storage: 1Gi
+  accessModes: # ระบุโหมดการเข้าถึงเป็น ReadWriteOnce
+    - ReadWriteOnce
+  hostPath: # ระบุว่าข้อมูลจะถูกเก็บบนเครื่องโฮสต์ที่มีเส้นทางเป็น "/wordpress"
+    path: "/wordpress"
+  persistentVolumeReclaimPolicy: Recycle # ระบุว่าเมื่อ PersistentVolume ถูกปลดทิ้ง (decommission) ข้อมูลในพื้นที่จะถูกล้างใหม่ (recycle).
+---
+apiVersion: v1
+kind: PersistentVolumeClaim # ระบุข้อมูลเกี่ยวกับ PersistentVolumeClaim ที่จะเชื่อมต่อกับ PersistentVolume เพื่อใช้สำหรับ WordPress.
+metadata:
+  name: wp-pv-claim
+  labels:
+    app: wordpress
+spec:
+  storageClassName: manual # ระบุชื่อของคลาสเก็บข้อมูล (StorageClass) เป็น "manual"
+  accessModes: # ระบุโหมดการเข้าถึงเป็น ReadWriteOnce
+    - ReadWriteOnce
+  resources:
+    requests: # ระบุการร้องขอการใช้พื้นที่เก็บข้อมูลขนาด 1 กิกะไบต์
+      storage: 1Gi
+---
+apiVersion: v1 
+kind: Service
+metadata:
+  name: wordpress
+  labels:
+    app: wordpress
+    tier: frontend
+spec:
+  ports: # ระบุ port
+    - port: 80
+      targetPort: 80
+      nodePort: 30002
+  selector:
+    app: wordpress
+    tier: frontend
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wordpress
+  labels:
+    app: wordpress
+    tier: frontend
+spec:
+  replicas: 2 # ระบุจำนวนรายการของ Pods ที่ต้องการสร้างขึ้นสำหรับ WordPress
+  selector: #  ระบุเพื่อเลือก Pods โดยใช้ป้ายกำกับ "app: wordpress" และ "tier: frontend"
+    matchLabels:
+      app: wordpress
+      tier: frontend
+  strategy: # ระบุว่าการสร้างจะใช้วิธี Recreate (สร้างใหม่ทุกครั้ง).
+    type: Recreate
+  template: # ระบุโครงสร้างของ Pods ที่จะถูกสร้างโดย Deployment.
+    metadata:
+      labels:
+        app: wordpress
+        tier: frontend
+    spec:
+      containers:
+        - image: wordpress:5.9.3-php7.4-apache
+          name: wordpress
+          env: # ระบุตัวแปรสภาพแวดล้อมสำหรับการกำหนดข้อมูลการเชื่อมต่อกับ MySQL เช่น รายชื่อฐานข้อมูล, ผู้ใช้ MySQL, รหัสผ่าน MySQL, และโฮสต์ฐานข้อมูล MySQL
+            - name: WORDPRESS_DB_HOST
+              value: wordpress-mysql
+            - name: WORDPRESS_DB_NAME
+              value: wordpress_db
+            - name: WORDPRESS_DB_USER
+              value: wordpress
+            - name: WORDPRESS_DB_PASSWORD
+              value: wordpress
+          ports: # ระบุ port
+            - containerPort: 80
+              name: wordpress
+          volumeMounts: # ระบุการเชื่อมต่อของ PersistentVolumeClaim กับโฟลเดอร์ 
+            - name: wordpress-persistent-storage
+              mountPath: /var/www/html
+      volumes: # ระบุข้อมูลเกี่ยวกับการใช้งาน PersistentVolumeClaim ด้วยการเรียกใช้ wp-pv-claim.
+        - name: wordpress-persistent-storage
+          persistentVolumeClaim:
+            claimName: wp-pv-claim
+
