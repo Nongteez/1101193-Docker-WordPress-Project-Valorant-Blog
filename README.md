@@ -14,13 +14,6 @@ Valorant Blog
 
 ## 📦 การติดตั้ง
 
-### ข้อกำหนดเบื้องต้น
-
-- [Node.js](https://nodejs.org/) (เวอร์ชัน 12 หรือสูงกว่า)
-- [React Native CLI](https://reactnative.dev/docs/environment-setup)
-- [Android Studio](https://developer.android.com/studio) (สำหรับ Android)
-- [Xcode](https://developer.apple.com/xcode/) (สำหรับ iOS)
-
 ### ขั้นตอนการติดตั้ง
 
 1. **คลอนโปรเจกต์**:
