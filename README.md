@@ -4,24 +4,23 @@ Valorant Blog
 
 ## 📖 About
 
-ยินดีต้อนรับสู่ **[Valorant Blog]**! แอปพลิเคชันที่พัฒนาขึ้นด้วย **WordPress** และ ใช้ Docker ในการรันโปรเจค
-เว็ปไซต์นี้เป็นโปรเจคของ 1101193 Project in System Administration ที่ใช้ในส่วนของ Docker และ Linux เป็นหลัก
+Welcome to [Valorant Blog]! This application is developed with WordPress and uses Docker to run the project. , This website is a project for 1101193 Project in System Administration, focusing primarily on Docker and Linux.
 
 
 ## ✨ ฟีเจอร์
 
-- 📱 ฟีเจอร์ 1: [อัพเดทข่าวสารของเกม Valorant โดยเฉพาะ]
-- 📱 ฟีเจอร์ 2: [อัพเดทการแข่งขันของเกม Valorant]
+- 📱 Feature 1: [Updates on Valorant game news specifically]
+- 📱 Feature 2: [Updates on Valorant game competitions]
+  
+## 📦 Installation
 
-## 📦 การติดตั้ง
+### Installation Steps
 
-### ขั้นตอนการติดตั้ง
-
-1. **โหลดโปรเจคเพิ่มเติม**
-เนื่องจากไม่สามารถ Upload ขึ้น Github ได้ เพราะไฟล์ใหญ่ 
+1. **Download additional project files**
+Since the files are too large to upload to GitHub:
    ```bash
    https://drive.google.com/drive/folders/1kkdpSubQAcQFdfupXI9Uq-g0OFS1rR1z?usp=sharing
    
--  1: ใช้ plugin all-in-one ใน WordPress
--  2: ลากไฟล์ ที่อยู่ใน Google Drive ที่ชื่อว่า all-in-one เข้าไปใส่
--  3: คุณจำเป็นต้องมี Docker Compose
+-  1: Use the All-in-One plugin in WordPress
+-  2: Drag the file named "all-in-one" from Google Drive into the upload area
+-  3: You will need Docker Compose
