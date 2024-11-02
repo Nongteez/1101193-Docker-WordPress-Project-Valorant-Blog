@@ -1,6 +1,6 @@
-# ชื่อโปรเจกต์ React Native
+# Project
+Valorant Blog
 
-[![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE) ![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)
 
 ## 📖 บทนำ
 
