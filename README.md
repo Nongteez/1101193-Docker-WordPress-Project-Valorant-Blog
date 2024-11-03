@@ -7,7 +7,7 @@ Valorant Blog
 Welcome to [Valorant Blog]! This application is developed with WordPress and uses Docker to run the project. , This website is a project for 1101193 Project in System Administration, focusing primarily on Docker and Linux.
 
 
-## ✨ ฟีเจอร์
+## ✨ Feature
 
 - 📱 Feature 1: [Updates on Valorant game news specifically]
 - 📱 Feature 2: [Updates on Valorant game competitions]
