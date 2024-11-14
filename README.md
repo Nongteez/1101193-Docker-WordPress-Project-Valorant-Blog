@@ -24,3 +24,5 @@ Since the files are too large to upload to GitHub:
 -  Use the All-in-One plugin in WordPress
 -  Drag the file named "all-in-one" from Google Drive into the upload area
 -  You will need Docker Compose
+
+.
